@@ -20,7 +20,7 @@ To install this project on your local machine and get it running in its own virt
 
 5. Make sure you have `Python3`, `pip`, and `pipenv` installed
 
-    a. Depending on your OS, open a Command or Terminal window on your computer and run the command `python --version`. You should get an output like `Python 3.x.x` or `Python 2.x.x`.
+    a. Depending on your OS, open a Command/PowerShell or Terminal window on your computer and run the command `python --version`. You should get an output like `Python 3.x.x` or `Python 2.x.x`.
 
     b. If you do not have Python3 installed, please [follow these instructions](https://docs.python-guide.org/starting/installation/)
 
