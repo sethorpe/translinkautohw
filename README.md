@@ -53,7 +53,7 @@ Ordinarily, you should be able to install your virtual environment and packges i
 
 1. From the root directory of your project, create a virtual environment by running `pipenv --three`. This creates a virtual environment with your version of Python 3. It also creates a **Pipfile** in your project directory that holds the requirements.
 
-2. There are a couple of packages required here and that's **selenium** and **pytest**. So run the command `pipenv install selenium pytest`. It will install the packages and their dependencies in the environment and add it to the **Pipfile**. 
+2. There are a few packages required here so run the command `pipenv install selenium pytest webdriver-manager pytest-html`. It will install the packages and their dependencies in the environment and add them to the **Pipfile**. 
 
 3. When the command is complete, you should see a success message followed by the location of the environment, and the command on how to activate it.
 
@@ -66,11 +66,17 @@ Ordinarily, you should be able to install your virtual environment and packges i
     - Linux or MacOS: `./chromedriver`
 
 
-2. Run the application with `pipenv run pytest main.py -v`
+2. Run the application with `pipenv run pytest main.py` 
 
 3. When execution completes, you can shutdown the virtual environment with:
 
     a. `exit` - this only temporarily closes the subshell. Should you wish to return, just run the `pipenv shell` command again to re-launch.
 
     b. `pipenv --rm` this will destroy the virtual environment altogether.
+
+## Reports and Screenshots
+
+- When execution has completed, check the **Translink_Screenshots** folder for validation screenshots.
+- If there was an error, the screenshot would be in the **Translink_Errors** folder
+- The script creates both `report.html` and `report.xml` files. They will be available in the root of your project folder.
 
