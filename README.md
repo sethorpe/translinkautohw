@@ -27,7 +27,7 @@ To install this project on your local machine and get it running in its own virt
     c. By the time you've completed the previous step, you should now have a version of `Python 3` and `pip` installed on your local machine.
 
     d. Next we'll install `pipenv`. You should be able to just execute the following command `pip install --user pipenv`. However, if that doesn't work, please refer to [this guide](https://docs.python-guide.org/dev/virtualenvs/#virtualenvironments-ref). Once you're able to install pipenv successfully, we're ready to begin.
-    
+
     e. If you're installing on Windows 10, you might run into a warning asking you to add some of the `pipenv` executables to PATH. Check out this [helpful guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/) to learn how to add to the PATH.
 
 ## Using pipenv in your project
@@ -47,6 +47,9 @@ To install this project on your local machine and get it running in its own virt
 ## Create the virtual environment
 
 Ordinarily, you should be able to install your virtual environment and packges in one command `pipenv install --ignore-pipfile`. However, if your version of Python differs from what's in the Pipfile, you may run into issues. So I'll break it down step by step below.
+
+### Take Note!
+ You may come across a warning message that says your version of Python may be different from the package requirement. To avoid this, delete the Pipfile from the root directory of your project before running the `pipenv --three` command. 
 
 1. From the root directory of your project, create a virtual environment by running `pipenv --three`. This creates a virtual environment with your version of Python 3. It also creates a **Pipfile** in your project directory that holds the requirements.
 
@@ -70,3 +73,4 @@ Ordinarily, you should be able to install your virtual environment and packges i
     a. `exit` - this only temporarily closes the subshell. Should you wish to return, just run the `pipenv shell` command again to re-launch.
 
     b. `pipenv --rm` this will destroy the virtual environment altogether.
+
