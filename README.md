@@ -4,6 +4,7 @@ To install this project on your local machine and get it running in its own virt
 1. Create a new project folder to run this application
 
 2. You can get the files into your project folder a number of ways:
+
     a. Clone the GitHub repository - just click the green "Code" button on the page for the command. You can do this via HTTPS or GitHub CLI.
 
     b. Alternatively, you can download the ZIP file to your local machine, unzip and then copy the files over to the project folder you created in ***Step 1***.
@@ -27,7 +28,7 @@ To install this project on your local machine and get it running in its own virt
 
     d. Next we'll install `pipenv`. You should be able to just execute the following command `pip install --user pipenv`. However, if that doesn't work, please refer to [this guide](https://docs.python-guide.org/dev/virtualenvs/#virtualenvironments-ref). Once you're able to install pipenv successfully, we're ready to begin.
 
-### Using pipenv in your project
+## Using pipenv in your project
 
 - From this point forward, we will have no further use for the `pip` command.
 
@@ -41,7 +42,7 @@ To install this project on your local machine and get it running in its own virt
 
 - Should your environment ever get messy and you need to refresh, use `pipenv --rm` to destroy the current and follow the steps below to create a new one. 
 
-#### Create the virtual environment
+## Create the virtual environment
 
 Ordinarily, you should be able to install your virtual environment and packges in one command `pipenv install --ignore-pipfile`. However, if your version of Python differs from what's in the Pipfile, you may run into issues. So I'll break it down step by step below.
 
@@ -53,7 +54,7 @@ Ordinarily, you should be able to install your virtual environment and packges i
 
 4. Activate the virtual environment by running `pipenv shell`.
 
-#### To run the code
+## To run the code
 
 1. Before we run the code, we need to make an edit to `main.py`. We need to set the path of the webDriver executable on line 23. Earlier we downloaded it and added it to the root of this project folder so now we change the value of the`executable_path` parameter. See options below. Remember to include either single or double quotes. 
     - Windows OS: `./chromedriver.exe`
@@ -62,7 +63,8 @@ Ordinarily, you should be able to install your virtual environment and packges i
 
 2. Run the application with `pytest main.py -v`
 
-2. When execution completes, you can shutdown the virtual environment with:
+3. When execution completes, you can shutdown the virtual environment with:
+
     a. `exit` - this only temporarily closes the subshell. Should you wish to return, just run the `pipenv shell` command again to re-launch.
 
     b. `pipenv --rm` this will destroy the virtual environment altogether.
