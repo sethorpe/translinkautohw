@@ -1,3 +1,7 @@
 archive/
 chromedriver
 Pipfile.lock
+Translink_Screenshots/
+report.html
+report.xml
+.pytest_cache/
