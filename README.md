@@ -27,6 +27,7 @@ To install this project on your local machine and get it running in its own virt
     c. By the time you've completed the previous step, you should now have a version of `Python 3` and `pip` installed on your local machine.
 
     d. Next we'll install `pipenv`. You should be able to just execute the following command `pip install --user pipenv`. However, if that doesn't work, please refer to [this guide](https://docs.python-guide.org/dev/virtualenvs/#virtualenvironments-ref). Once you're able to install pipenv successfully, we're ready to begin.
+    
     e. If you're installing on Windows 10, you might run into a warning asking you to add some of the `pipenv` executables to PATH. Check out this [helpful guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/) to learn how to add to the PATH.
 
 ## Using pipenv in your project
