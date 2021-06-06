@@ -2,15 +2,14 @@ import os
 import shutil
 import utility
 import unittest
+import pytest
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-
 class TestTranslinkAuto(unittest.TestCase):
-
     # Clean the Translink Screenshots folder before every run.
     if os.path.isdir('Translink_Screenshots'):
         # Folder exists! Delete it
@@ -21,9 +20,10 @@ class TestTranslinkAuto(unittest.TestCase):
         # Folder doesn't exist, so create one
         os.mkdir ('Translink_Screenshots')
 
+
     def setUp(self):
         options = Options()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         self.driver.implicitly_wait(10)
@@ -44,19 +44,21 @@ class TestTranslinkAuto(unittest.TestCase):
         for method, error in self._outcome.errors:
             if error:
                 self.driver.get_screenshot_as_file(os.getcwd() + "/Translink_Errors/" + "screenshot_" + self.id() + "__" + utility.current_time() + ".png")
-
+    
+    # @pytest.mark.parametrize('route', [(99)])
     def test_find_bus_route(self):
         self.driver.find_element(By.LINK_TEXT,'Next Bus').click()
 
         # Find the search box, first clear it and then enter search parameter '99'
         self.driver.find_element_by_id('NextBusSearchTerm').clear()
         self.driver.find_element_by_id('NextBusSearchTerm').send_keys('99')
+        # self.driver.find_element_by_id('NextBusSearchTerm').send_keys(route)
 
         # Click on 'Find My Next Bus'
         self.driver.find_element(By.CSS_SELECTOR, ".verticallyCenteredContent > button").click()
         self.driver.get_screenshot_as_file(os.getcwd() + "/Translink_Screenshots/" + "screenshot_" + self.id() + "__" + utility.current_time() + ".png")
 
-
+    @pytest.mark.skip
     def test_find_bus_route_and_save_to_favs(self):
         self.driver.find_element(By.LINK_TEXT,'Next Bus').click()
 
@@ -82,6 +84,7 @@ class TestTranslinkAuto(unittest.TestCase):
         # Wait 5 seconds before moving on
         sleep(5)
 
+    @pytest.mark.skip
     def test_validate_favs_link_title(self):
         self.driver.find_element(By.LINK_TEXT,'Next Bus').click()
 
@@ -126,6 +129,7 @@ class TestTranslinkAuto(unittest.TestCase):
         # Now get the current url and compare with param my_route_url from earlier.
         self.assertEqual(self.driver.current_url, my_route_url, 'URLs do not match!')
 
+    @pytest.mark.skip
     def test_validate_route_title_displayed(self):
         self.driver.find_element(By.LINK_TEXT,'Next Bus').click()
 
@@ -178,7 +182,7 @@ class TestTranslinkAuto(unittest.TestCase):
         self.driver.get_screenshot_as_file(os.getcwd() + "/Translink_Screenshots/" + "screenshot_" + self.id() + "__" + utility.current_time() + ".png")
 
    
-
+    @pytest.mark.skip
     def test_validate_stop_no_displayed(self):
         self.driver.find_element(By.LINK_TEXT,'Next Bus').click()
 
