@@ -5,3 +5,16 @@ Translink_Screenshots/
 report.html
 report.xml
 .pytest_cache/
+.DS_Store
+.vscode
+Translink_Errors/
+Translink_Report.html
+Translink_Report.xml
+assets/
+geckodriver.log
+new_params.py
+report_old.html
+sample___test.py
+test_param_original.py
+test_usefixtures.py
+.gitignore
