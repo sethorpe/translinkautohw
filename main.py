@@ -1,50 +1,57 @@
 from __future__ import print_function
 import inspect
-import unittest
 import pytest
 import os
 import utility
 import shutil
-import datetime
 from time  import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common import desired_capabilities
-import webdriver_manager
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+from msedge.selenium_tools import EdgeOptions
+from msedge.selenium_tools import Edge
 
-class TestTranslinkAuto(): 
+#Fixture for ALL browsers
+@pytest.fixture(params = ["chrome", "firefox", "msedge"], scope = "function")
+def driver_init(request):
+    if request.param == "chrome":
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        web_driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    if request.param == "firefox":
+        firefox_options = webdriver.FirefoxOptions()
+        firefox_options.headless = True
+        web_driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=firefox_options)
+    if request.param == "msedge":
+        desired_capabilities = {}
+        web_driver = webdriver.Edge(executable_path=EdgeChromiumDriverManager().install(), capabilities=desired_capabilities)
+    request.cls.driver = web_driver
+    # Open URL
+    web_driver.get('https://new.translink.ca')
+    # Set Window Size
+    web_driver.set_window_size(1440, 800)
+    yield
+    web_driver.close()
+
+@pytest.mark.usefixtures("driver_init")
+class BasicTest:
+    pass
+class TestTranslinkAuto(BasicTest): 
     driver = ''
 
     # Clean the Translink Screenshots folder before every run.
-    # if os.path.isdir('Translink_Screenshots'):
-    #     # Folder exists! Delete it
-    #     shutil.rmtree('Translink_Screenshots')
-    #     # Create a new folder for this code run
-    #     os.mkdir('Translink_Screenshots')
-    # else:
-    #     # Folder doesn't exist, so create one
-    #     os.mkdir ('Translink_Screenshots')
-
-    def setup_method(self):
-        options = Options()
-        # options.add_argument('--headless')
-        options.add_argument('--no-sandbox')
-        options.page_load_strategy = 'normal'
-        desired_capabilities = {}
-        # self.driver = webdriver.Edge(executable_path='/Users/seyithorpe/Downloads/edgedriver_mac64/msedgedriver', capabilities=desired_capabilities)
-        # self.driver = webdriver.Edge(executable_path=EdgeChromiumDriverManager().install(), capabilities=desired_capabilities)
-        self.driver = webdriver.Chrome(ChromeDriverManager().install(), options = options)
-        # self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
-        self.driver.implicitly_wait(10)
-        #Open URL
-        self.driver.get("https://new.translink.ca")
-        #Maximize Window / Set Window Size
-        # self.driver.maximize_window()
-        self.driver.set_window_size(1440, 800)
+    if os.path.isdir('Translink_Screenshots'):
+        # Folder exists! Delete it
+        shutil.rmtree('Translink_Screenshots')
+        # Create a new folder for this code run
+        os.mkdir('Translink_Screenshots')
+    else:
+        # Folder doesn't exist, so create one
+        os.mkdir ('Translink_Screenshots')
 
     # @pytest.mark.skip
     # @pytest.mark.parametrize('route',[(99)])
@@ -175,8 +182,8 @@ class TestTranslinkAuto():
     # @pytest.mark.skip
     @pytest.mark.parametrize('route, fav_title, expected_route_title, destination, stop_name, stop_no',
                             [
-                                # (99, 'Seyi\'s Fave Route','99 Commercial-Broadway / UBC (B-Line)', 'To Comm\'l-Bdway Stn / Boundary B-Line', 'UBC Exchange Bay 7', "Stop # 61935"),
-                                # (28, 'Seyi\'s Fave Route 2', '28 Phibbs Exch / Joyce Stn', 'To Kootenay Loop / Phibbs Exch', 'Joyce Stn Bay 4', 'Stop # 61609'),
+                                (99, 'Seyi\'s Fave Route','99 Commercial-Broadway / UBC (B-Line)', 'To Comm\'l-Bdway Stn / Boundary B-Line', 'UBC Exchange Bay 7', "Stop # 61935"),
+                                (28, 'Seyi\'s Fave Route 2', '28 Phibbs Exch / Joyce Stn', 'To Kootenay Loop / Phibbs Exch', 'Joyce Stn Bay 4', 'Stop # 61609'),
                                 (25, 'Seyi\'s Fave Route 3', '25 Brentwood Stn / UBC', 'To Brentwood Stn / Nanaimo Stn', 'Nanaimo Stn Bay 1', 'Stop # 60314')
                             ]
 
@@ -189,7 +196,7 @@ class TestTranslinkAuto():
             _dir = os.path.join(_dir, 'Route_%s' % route)
             if not os.path.exists(_dir):
                 os.mkdir(_dir)
-
+           
             # Call to other function/method
             # self.test_validate_route_title_displayed(route, fav_title, expected_route_title, _dir)
             self.validate_route_title_displayed(route, fav_title, expected_route_title, _dir)
@@ -219,8 +226,4 @@ class TestTranslinkAuto():
         except Exception as e:
             self.driver.get_screenshot_as_file(os.getcwd() + "/Translink_Errors/" + "screenshot_" + inspect.currentframe().f_code.co_name + "__" + utility.current_time() + ".png")
             raise e
-        
-    
-    def teardown_method(self):
-        # self.screen_shot()
-        self.driver.quit()
+
